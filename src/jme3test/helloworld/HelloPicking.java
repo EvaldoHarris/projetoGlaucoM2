@@ -83,27 +83,17 @@ public class HelloPicking extends SimpleApplication {
         Spatial sky = SkyFactory.createSky(assetManager, west, east, north, south, up, down);
         rootNode.attachChild(sky);
         shootables = new Node("Shootables");
-       delettheSheriff("Shootables");
-    }
-
-    void delettheSheriff(String name) {
-         /**
-         * crie quatro caixas coloridas e um piso para fotografar:
-         */
-        if(name != "a Dragon"){
         shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f));
-        }else{
-            shootables.detachChild(makeCube("a Dragon", -2f, 0f, 1f));
-        }
-        rootNode.attachChild(shootables);
-        if ("the Sheriff" != name) {
-            shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f));
-        } else {
-            shootables.detachChild(makeCube("the Sheriff", 0f, 1f, -2f));
-        }
-        /*shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f));
 
-        shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f));*/
+        shootables.detachChild(makeCube("a Dragon", -2f, 0f, 1f));
+
+        rootNode.attachChild(shootables);
+
+        shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f));
+
+        shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f));
+
+        shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f));
         shootables.detachChild(makeFloor());
         shootables.attachChild(makeCharacter());
     }
@@ -140,8 +130,7 @@ public class HelloPicking extends SimpleApplication {
                     System.out.println("---------------------------------------------------------" + i);
                     System.out.println("  ACERTOU " + hit + " at " + pt + ", " + dist + " wu away.");
                     //shootables.detachChild(makeCube());                    
-                    delettheSheriff(hit);
-                    
+
                 }
                 // 5. Use os resultados (marcamos o objeto hit)
                 if (results.size() > 0) {
@@ -150,7 +139,7 @@ public class HelloPicking extends SimpleApplication {
                     // Vamos interagir - marcamos o hit com um ponto vermelho.
                     mark.setLocalTranslation(closest.getContactPoint());
                     rootNode.attachChild(mark);
-                    
+
                     //
                 } else {
                     // Sem hits? Em seguida, remova a marca vermelha.
