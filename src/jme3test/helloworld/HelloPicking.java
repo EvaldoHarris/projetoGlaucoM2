@@ -35,6 +35,8 @@ public class HelloPicking extends SimpleApplication {
     private Node shootables5;
     private Geometry mark;
     boolean dragon = true;
+    float z = -100f,x = -20f, y = 0f;
+    Geometry cube;
 
     @Override
     public void simpleInitApp() {
@@ -58,13 +60,13 @@ public class HelloPicking extends SimpleApplication {
         shootables5 = new Node("Shootables4");
         
 
-        shootables.attachChild(makeCube("a Dragon", -20f, 0f, -100f));
+        shootables.attachChild(makeCube("a Dragon", x, y, z));
         rootNode.attachChild(shootables);
-        shootables2.attachChild(makeCube("the Sheriff", 0f, 1f, -100f));
+        shootables2.attachChild(makeCube("the Sheriff", 20f, 1f, -100f));
         rootNode.attachChild(shootables2);
-        shootables3.attachChild(makeCube("a tin can", 1f, -2f, -100f));
+        shootables3.attachChild(makeCube("a tin can", 13f, -2f, -100f));
         rootNode.attachChild(shootables3);
-        shootables4.attachChild(makeCube("the Deputy", 1f, 0f, -100f));
+        shootables4.attachChild(makeCube("the Deputy", 25f, 0f, -100f));
         rootNode.attachChild(shootables4);
         shootables.detachChild(makeFloor());
         shootables5.attachChild(makeCharacter());
@@ -156,15 +158,19 @@ public class HelloPicking extends SimpleApplication {
             }
         }
     };
-
+@Override
+    public void simpleUpdate(float tpf) {
+       System.out.println("z ="+ z);
+       cube.setLocalTranslation(x, y,z++); 
+    }
     /**
      * Um objeto de cubo para a prática de destino
      */
     protected Geometry makeCube(String name, float x, float y, float z) {
         //criar aqui os inimigos
         Box box = new Box(1, 1, 1);
-        Geometry cube = new Geometry(name, box);
-        cube.setLocalTranslation(x, y, z);
+        cube = new Geometry(name, box);
+        
         Material mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat1.setColor("Color", ColorRGBA.randomColor());
         cube.setMaterial(mat1);
