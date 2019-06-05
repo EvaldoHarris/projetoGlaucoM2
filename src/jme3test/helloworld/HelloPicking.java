@@ -1,34 +1,3 @@
-/*
- * Copyright (c) 2009-2012 jMonkeyEngine
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
- *
- * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- *
- * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
- *
- * * Neither the name of 'jMonkeyEngine' nor the names of its contributors
- *   may be used to endorse or promote products derived from this software
- *   without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package jme3test.helloworld;
 
 import com.jme3.app.SimpleApplication;
@@ -53,10 +22,6 @@ import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.util.SkyFactory;
 
-/**
- * Sample 8 - how to let the user pick (select) objects in the scene using the
- * mouse or key presses. Can be used for shooting, opening doors, etc.
- */
 public class HelloPicking extends SimpleApplication {
 
     public static void main(String[] args) {
@@ -64,6 +29,10 @@ public class HelloPicking extends SimpleApplication {
         app.start();
     }
     private Node shootables;
+    private Node shootables2;
+    private Node shootables3;
+    private Node shootables4;
+    private Node shootables5;
     private Geometry mark;
     boolean dragon = true;
 
@@ -83,19 +52,55 @@ public class HelloPicking extends SimpleApplication {
         Spatial sky = SkyFactory.createSky(assetManager, west, east, north, south, up, down);
         rootNode.attachChild(sky);
         shootables = new Node("Shootables");
+        shootables2 = new Node("Shootables2");
+        shootables3 = new Node("Shootables3");
+        shootables4 = new Node("Shootables4");
+        shootables5 = new Node("Shootables4");
+        
+
         shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f));
-
-        shootables.detachChild(makeCube("a Dragon", -2f, 0f, 1f));
-
         rootNode.attachChild(shootables);
-
-        shootables.attachChild(makeCube("the Sheriff", 0f, 1f, -2f));
-
-        shootables.attachChild(makeCube("a tin can", 1f, -2f, 0f));
-
-        shootables.attachChild(makeCube("the Deputy", 1f, 0f, -4f));
+        shootables2.attachChild(makeCube("the Sheriff", 0f, 1f, -2f));
+        rootNode.attachChild(shootables2);
+        shootables3.attachChild(makeCube("a tin can", 1f, -2f, 0f));
+        rootNode.attachChild(shootables3);
+        shootables4.attachChild(makeCube("the Deputy", 1f, 0f, -4f));
+        rootNode.attachChild(shootables4);
         shootables.detachChild(makeFloor());
-        shootables.attachChild(makeCharacter());
+        shootables5.attachChild(makeCharacter());
+       // rootNode.attachChild(shootables5);
+        shootables2.detachChild(makeFloor());
+        shootables3.detachChild(makeFloor());
+        shootables4.detachChild(makeFloor());
+
+    }
+
+    void deleta(String hit) {
+        System.out.println("deleta()");
+        if (hit == "Oto-geom-1") {
+            shootables5.detachChild(makeCharacter());
+            rootNode.detachChild(shootables5);
+        }
+        if (hit == "a Dragon") {
+            shootables.detachChild(makeCube("a Dragon", -2f, 0f, 1f));
+            rootNode.detachChild(shootables);
+        }
+        if (hit == "the Sheriff") {
+            shootables2.detachChild(makeCube("the Sheriff", 0f, 1f, -2f));
+            rootNode.detachChild(shootables2);
+        }
+        if (hit == "a tin can") {
+            shootables3.detachChild(makeCube("a tin can", 1f, -2f, 0f));
+            rootNode.detachChild(shootables3);
+        }
+        if (hit == "the Deputy") {
+            shootables4.detachChild(makeCube("the Deputy", 1f, 0f, -4f));
+            rootNode.detachChild(shootables4);
+
+        }
+        //shootables.detachChild(makeFloor());
+        //shootables.detachChild(makeCharacter());
+
     }
 
     /**
@@ -120,6 +125,9 @@ public class HelloPicking extends SimpleApplication {
                 Ray ray = new Ray(cam.getLocation(), cam.getDirection());
                 // 3. Aponte o raio do bloqueio do came para a direção da câmera.
                 shootables.collideWith(ray, results);
+                shootables2.collideWith(ray, results);
+                shootables3.collideWith(ray, results);
+                shootables4.collideWith(ray, results);
                 // 4. Imprimir os resultados
                 System.out.println("----- Collisions? " + results.size() + "-----");
                 for (int i = 0; i < results.size(); i++) {
@@ -129,7 +137,7 @@ public class HelloPicking extends SimpleApplication {
                     String hit = results.getCollision(i).getGeometry().getName();
                     System.out.println("---------------------------------------------------------" + i);
                     System.out.println("  ACERTOU " + hit + " at " + pt + ", " + dist + " wu away.");
-                    //shootables.detachChild(makeCube());                    
+                    deleta(hit);
 
                 }
                 // 5. Use os resultados (marcamos o objeto hit)
@@ -153,6 +161,7 @@ public class HelloPicking extends SimpleApplication {
      * Um objeto de cubo para a prática de destino
      */
     protected Geometry makeCube(String name, float x, float y, float z) {
+        //criar aqui os inimigos
         Box box = new Box(1, 1, 1);
         Geometry cube = new Geometry(name, box);
         cube.setLocalTranslation(x, y, z);
