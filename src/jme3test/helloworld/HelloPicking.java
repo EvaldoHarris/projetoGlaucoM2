@@ -58,13 +58,13 @@ public class HelloPicking extends SimpleApplication {
         shootables5 = new Node("Shootables4");
         
 
-        shootables.attachChild(makeCube("a Dragon", -2f, 0f, 1f));
+        shootables.attachChild(makeCube("a Dragon", -20f, 0f, -100f));
         rootNode.attachChild(shootables);
-        shootables2.attachChild(makeCube("the Sheriff", 0f, 1f, -2f));
+        shootables2.attachChild(makeCube("the Sheriff", 0f, 1f, -100f));
         rootNode.attachChild(shootables2);
-        shootables3.attachChild(makeCube("a tin can", 1f, -2f, 0f));
+        shootables3.attachChild(makeCube("a tin can", 1f, -2f, -100f));
         rootNode.attachChild(shootables3);
-        shootables4.attachChild(makeCube("the Deputy", 1f, 0f, -4f));
+        shootables4.attachChild(makeCube("the Deputy", 1f, 0f, -100f));
         rootNode.attachChild(shootables4);
         shootables.detachChild(makeFloor());
         shootables5.attachChild(makeCharacter());
